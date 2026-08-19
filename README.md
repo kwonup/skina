@@ -1,6 +1,6 @@
-<img src="skina_logo.png" alt="skina logo" style="background-color: #ffffff; padding: 10px; border-radius: 8px;" />
+<img src="skina_logo.png"/>
 
-## skina
+# skina
 
 AI-Hub 피부종양 합성 이미지 데이터로 15종 피부종양을 분류하는 PyTorch 팀 프로젝트입니다. 네 모델을 같은 데이터 split과 baseline 조건으로 학습하고 Accuracy와 Macro F1을 비교합니다.
 
