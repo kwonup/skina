@@ -1,0 +1,18 @@
+# 원본 및 전처리 데이터
+data/
+
+# 큰 모델 파일만 제외하고 작은 결과 파일과 plot은 추적 가능
+outputs/models/*
+!outputs/models/.gitkeep
+
+# 실험 로그와 Python cache
+wandb/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# 로컬 환경과 비밀값
+.venv/
+venv/
+.env
+.DS_Store

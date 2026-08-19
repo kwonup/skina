@@ -1,0 +1,26 @@
+{
+  "model": "resnet18",
+  "data": {
+    "image_size": 224,
+    "batch_size": 32,
+    "num_workers": 0,
+    "seed": 42
+  },
+  "training": {
+    "epochs": 3,
+    "learning_rate": 0.0001,
+    "optimizer": "Adam",
+    "weight_decay": 0.0,
+    "pretrained": true
+  },
+  "wandb": {
+    "enabled": true,
+    "entity": "sesac08",
+    "project": "skina",
+    "run_name": "resnet18_baseline"
+  },
+  "inference": {
+    "top_k": 3,
+    "checkpoint": "outputs/models/resnet18_best.pth"
+  }
+}
