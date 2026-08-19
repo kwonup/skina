@@ -1,0 +1,116 @@
+{
+  "model": "mobilenet_v3",
+  "checkpoint": "C:\\Users\\user\\Desktop\\Git\\skina\\outputs\\models\\mobilenet_v3_best.pth",
+  "checkpoint_epoch": 2,
+  "validation_accuracy": 0.9973333333333333,
+  "validation_f1_macro": 0.9973330666399974,
+  "test_accuracy": 0.996,
+  "test_f1_macro": 0.9959858570891105,
+  "test_precision_macro": 0.996078431372549,
+  "test_recall_macro": 0.996,
+  "classification_report": {
+    "actinic_keratosis": {
+      "precision": 1.0,
+      "recall": 0.98,
+      "f1-score": 0.98989898989899,
+      "support": 50.0
+    },
+    "basal_cell_carcinoma": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 50.0
+    },
+    "bowen_disease": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 50.0
+    },
+    "dermatofibroma": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 50.0
+    },
+    "epidermal_cyst": {
+      "precision": 1.0,
+      "recall": 0.96,
+      "f1-score": 0.9795918367346939,
+      "support": 50.0
+    },
+    "hemangioma": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 50.0
+    },
+    "lentigo": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 50.0
+    },
+    "malignant_melanoma": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 50.0
+    },
+    "melanocytic_nevus": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 50.0
+    },
+    "milia": {
+      "precision": 0.9803921568627451,
+      "recall": 1.0,
+      "f1-score": 0.9900990099009901,
+      "support": 50.0
+    },
+    "pyogenic_granuloma": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 50.0
+    },
+    "sebaceous_hyperplasia": {
+      "precision": 0.9803921568627451,
+      "recall": 1.0,
+      "f1-score": 0.9900990099009901,
+      "support": 50.0
+    },
+    "seborrheic_keratosis": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 50.0
+    },
+    "squamous_cell_carcinoma": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 50.0
+    },
+    "wart": {
+      "precision": 0.9803921568627451,
+      "recall": 1.0,
+      "f1-score": 0.9900990099009901,
+      "support": 50.0
+    },
+    "accuracy": 0.996,
+    "macro avg": {
+      "precision": 0.996078431372549,
+      "recall": 0.996,
+      "f1-score": 0.9959858570891105,
+      "support": 750.0
+    },
+    "weighted avg": {
+      "precision": 0.9960784313725489,
+      "recall": 0.996,
+      "f1-score": 0.9959858570891101,
+      "support": 750.0
+    }
+  }
+}
