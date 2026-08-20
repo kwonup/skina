@@ -17,3 +17,7 @@ __pycache__/
 venv/
 .env
 .DS_Store
+
+# Next.js build output and dependencies
+node_modules/
+.next/
