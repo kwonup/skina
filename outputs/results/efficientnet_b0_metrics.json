@@ -1,0 +1,86 @@
+{
+  "model": "efficientnet_b0",
+  "checkpoint": "C:\\Users\\user\\Desktop\\sesac08code\\DeepLearningProject\\skina\\outputs\\models\\efficientnet_b0_best.pth",
+  "checkpoint_epoch": 7,
+  "validation_accuracy": 0.771,
+  "validation_f1_macro": 0.7702901837869429,
+  "test_accuracy": 0.776,
+  "test_f1_macro": 0.7754047946817415,
+  "test_precision_macro": 0.7786756774638885,
+  "test_recall_macro": 0.7759999999999999,
+  "classification_report": {
+    "actinic_keratosis": {
+      "precision": 0.7083333333333334,
+      "recall": 0.85,
+      "f1-score": 0.7727272727272727,
+      "support": 100.0
+    },
+    "basal_cell_carcinoma": {
+      "precision": 0.7254901960784313,
+      "recall": 0.74,
+      "f1-score": 0.7326732673267327,
+      "support": 100.0
+    },
+    "dermatofibroma": {
+      "precision": 0.84375,
+      "recall": 0.81,
+      "f1-score": 0.826530612244898,
+      "support": 100.0
+    },
+    "hemangioma": {
+      "precision": 0.8723404255319149,
+      "recall": 0.82,
+      "f1-score": 0.845360824742268,
+      "support": 100.0
+    },
+    "lentigo": {
+      "precision": 0.8921568627450981,
+      "recall": 0.91,
+      "f1-score": 0.900990099009901,
+      "support": 100.0
+    },
+    "malignant_melanoma": {
+      "precision": 0.7884615384615384,
+      "recall": 0.82,
+      "f1-score": 0.803921568627451,
+      "support": 100.0
+    },
+    "melanocytic_nevus": {
+      "precision": 0.7075471698113207,
+      "recall": 0.75,
+      "f1-score": 0.7281553398058253,
+      "support": 100.0
+    },
+    "seborrheic_keratosis": {
+      "precision": 0.6444444444444445,
+      "recall": 0.58,
+      "f1-score": 0.6105263157894737,
+      "support": 100.0
+    },
+    "squamous_cell_carcinoma": {
+      "precision": 0.8518518518518519,
+      "recall": 0.69,
+      "f1-score": 0.7624309392265194,
+      "support": 100.0
+    },
+    "wart": {
+      "precision": 0.7523809523809524,
+      "recall": 0.79,
+      "f1-score": 0.7707317073170732,
+      "support": 100.0
+    },
+    "accuracy": 0.776,
+    "macro avg": {
+      "precision": 0.7786756774638885,
+      "recall": 0.7759999999999999,
+      "f1-score": 0.7754047946817415,
+      "support": 1000.0
+    },
+    "weighted avg": {
+      "precision": 0.7786756774638887,
+      "recall": 0.776,
+      "f1-score": 0.7754047946817416,
+      "support": 1000.0
+    }
+  }
+}
