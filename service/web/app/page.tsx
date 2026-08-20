@@ -1,3 +1,6 @@
+import ImageAnalyzer from "@/components/ImageAnalyzer";
+
+
 export default function Home() {
   return (
     <main>
@@ -23,12 +26,7 @@ export default function Home() {
             <p>JPG, JPEG, PNG 파일을 선택해 주세요.</p>
           </div>
         </div>
-        <div className="upload-card upload-card-static">
-          <div className="upload-symbol" aria-hidden="true">+</div>
-          <strong>분석할 피부 이미지를 선택하세요</strong>
-          <p>최대 10MB까지 업로드할 수 있습니다.</p>
-          <span className="button button-primary">이미지 선택</span>
-        </div>
+        <ImageAnalyzer />
       </section>
 
       <aside className="section-shell disclaimer-card" aria-label="이용 안내">

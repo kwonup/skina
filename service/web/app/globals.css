@@ -46,6 +46,21 @@ button {
   border: 0;
 }
 
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .site-header {
   position: sticky;
   z-index: 20;
@@ -194,6 +209,16 @@ button {
   text-align: center;
 }
 
+.upload-card.interactive {
+  transition: border-color 150ms ease, background 150ms ease, box-shadow 150ms ease;
+}
+
+.upload-card.is-dragging {
+  border-color: var(--brand);
+  background: var(--surface-soft);
+  box-shadow: 0 18px 60px rgba(23, 107, 82, 0.16);
+}
+
 .upload-card strong {
   margin-top: 16px;
   font-size: 20px;
@@ -238,8 +263,110 @@ button {
   background: var(--brand-dark);
 }
 
+.button-secondary {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.button-secondary:hover {
+  border-color: #a9c9bd;
+  background: var(--surface-soft);
+}
+
 .button:active {
   transform: translateY(1px);
+}
+
+.selected-file {
+  width: min(100%, 560px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-preview {
+  position: relative;
+  width: min(100%, 420px);
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface-soft);
+}
+
+.image-preview img {
+  object-fit: contain;
+}
+
+.file-meta {
+  width: min(100%, 420px);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+  text-align: left;
+}
+
+.file-meta strong {
+  min-width: 0;
+  overflow: hidden;
+  margin: 0;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-meta span {
+  flex: 0 0 auto;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.analyze-button {
+  min-width: 130px;
+}
+
+.spinner {
+  width: 17px;
+  height: 17px;
+  margin-right: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+}
+
+.error-message,
+.analysis-complete {
+  margin-top: 14px;
+  border-radius: 12px;
+  padding: 13px 16px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.error-message {
+  border: 1px solid #efcaca;
+  background: #fff1f1;
+  color: var(--danger);
+}
+
+.analysis-complete {
+  border: 1px solid #b9ddcf;
+  background: var(--surface-soft);
+  color: var(--brand-dark);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 .disclaimer-card {
@@ -318,6 +445,15 @@ button {
   .upload-card {
     min-height: 300px;
     padding: 24px 18px;
+  }
+
+  .button-row {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .button-row .button {
+    width: 100%;
   }
 
   .footer-inner {
