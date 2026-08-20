@@ -1,5 +1,6 @@
 # 원본 및 전처리 데이터
 data/
+predict_pool/
 
 # 큰 모델 파일만 제외하고 작은 결과 파일과 plot은 추적 가능
 outputs/models/*

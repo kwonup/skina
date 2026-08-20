@@ -7,17 +7,23 @@
     "seed": 42
   },
   "training": {
-    "epochs": 15,
+    "epochs": 8,
     "learning_rate": 0.0001,
-    "optimizer": "Adam",
-    "weight_decay": 0.0,
-    "pretrained": false
+    "optimizer": "AdamW",
+    "weight_decay": 0.0001,
+    "pretrained": true,
+    "early_stopping": {
+      "enabled": true,
+      "patience": 2,
+      "monitor": "val_f1",
+      "mode": "max"
+    }
   },
   "wandb": {
     "enabled": true,
     "entity": "sesac08",
     "project": "skina",
-    "run_name": "cnn_baseline"
+    "run_name": "cnn_v2"
   },
   "inference": {
     "top_k": 3,
