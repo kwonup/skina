@@ -19,6 +19,7 @@ from sklearn.metrics import (
 from tqdm import tqdm
 
 from src.config import get_checkpoint_path, load_config
+from src.classes import validate_class_names
 from src.data.dataset import create_dataloaders
 from src.models import MODEL_NAMES, create_model
 from src.pipeline.train import get_device
@@ -77,7 +78,9 @@ def run_evaluation(
         image_size=image_size,
         seed=seed,
     )
-    class_names = checkpoint["class_names"]
+    class_names = list(
+        validate_class_names(checkpoint["class_names"], source="checkpoint")
+    )
     if list(dataset_class_names) != list(class_names):
         raise ValueError("checkpoint와 test dataset의 클래스 순서가 다릅니다.")
 

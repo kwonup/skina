@@ -4,9 +4,7 @@ import torch.nn as nn
 from torchvision.models import EfficientNet_B0_Weights, efficientnet_b0
 
 
-def create_efficientnet_b0(
-    num_classes: int = 15, pretrained: bool = True
-) -> nn.Module:
+def create_efficientnet_b0(num_classes: int, pretrained: bool = True) -> nn.Module:
     """EfficientNet-B0의 마지막 classifier를 클래스 수에 맞게 교체한다."""
     weights = EfficientNet_B0_Weights.DEFAULT if pretrained else None
     model = efficientnet_b0(weights=weights)

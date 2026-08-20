@@ -13,6 +13,7 @@ from tqdm import tqdm
 
 from src.config import get_checkpoint_path, load_config
 from src.data.dataset import IMAGE_SIZE, SEED, create_dataloaders
+from src.device import get_device
 from src.models import MODEL_NAMES, create_model
 
 
@@ -30,15 +31,6 @@ def set_seed(seed: int = SEED) -> None:
     if torch.backends.cudnn.is_available():
         torch.backends.cudnn.deterministic = True
         torch.backends.cudnn.benchmark = False
-
-
-def get_device() -> torch.device:
-    """CUDA, Apple MPS, CPU 순서로 사용할 장치를 선택한다."""
-    if torch.cuda.is_available():
-        return torch.device("cuda")
-    if torch.backends.mps.is_available():
-        return torch.device("mps")
-    return torch.device("cpu")
 
 
 def train_one_epoch(model, loader, criterion, optimizer, device):

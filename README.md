@@ -2,38 +2,35 @@
 
 # skina
 
-AI-Hub 피부종양 합성 이미지 데이터로 15종 피부종양을 분류하는 PyTorch 팀 프로젝트입니다. 네 모델을 같은 데이터 split과 baseline 조건으로 학습하고 Accuracy와 Macro F1을 비교합니다.
+재구성된 피부 이미지 데이터로 10종 피부 병변을 분류하는 PyTorch 팀 프로젝트입니다. 네 모델을 같은 데이터 split과 baseline 조건으로 학습하고 Accuracy와 Macro F1을 비교합니다.
 
 ## Dataset
 
-- AI-Hub Dataset 71864 피부종양 이미지 합성 데이터
-- RGB 512×512 이미지 총 13,500장, 클래스당 900장
+- AI-Hub Dataset 71864 피부종양 이미지 합성 데이터를 기반으로 재구성한 데이터
+- 현재 processed 데이터 총 12,000장, 클래스당 1,200장
 - 모델 입력 크기: 224×224
-- 최종 split: train 12,000장 / validation 750장 / test 750장
+- 최종 split: train 10,000장 / validation 1,000장 / test 1,000장
 
-원본 이미지는 아래처럼 폴더명을 정답 라벨로 사용하도록 배치합니다. JSON 라벨은 보관만 하며 `ImageFolder` 학습에는 사용하지 않습니다.
+이미지는 아래처럼 폴더명을 정답 라벨로 사용하도록 배치합니다. JSON 라벨은 보관만 하며 `ImageFolder` 학습에는 사용하지 않습니다.
 
 ```text
-data/raw/
-├── train/<class_name>/*.jpg
-├── validation/<class_name>/*.jpg
-└── labels/
+data/processed/
+├── train/<class_name>/*.{jpg,jpeg,png}
+├── val/<class_name>/*.{jpg,jpeg,png}
+└── test/<class_name>/*.{jpg,jpeg,png}
 ```
 
-## 15 Classes
+## 10 Classes
 
 ```text
 actinic_keratosis          basal_cell_carcinoma
-bowen_disease              dermatofibroma
-epidermal_cyst             hemangioma
+dermatofibroma             hemangioma
 lentigo                    malignant_melanoma
-melanocytic_nevus          milia
-pyogenic_granuloma         sebaceous_hyperplasia
-seborrheic_keratosis       squamous_cell_carcinoma
-wart
+melanocytic_nevus          seborrheic_keratosis
+squamous_cell_carcinoma    wart
 ```
 
-`ImageFolder`가 클래스 폴더명을 알파벳순 index로 바꾸며, 이 순서는 checkpoint의 `class_names`에도 저장됩니다.
+`configs/class_names.json`이 프로젝트의 클래스 순서를 관리합니다. `ImageFolder`와 checkpoint의 `class_names`도 실행 시 이 순서와 일치하는지 검증합니다.
 
 ## Project Structure
 
@@ -135,7 +132,7 @@ wandb login
 
 ## Prepare Data
 
-`data/raw/train`의 12,000장은 그대로 train으로 복사하고, `data/raw/validation`의 클래스별 100장은 seed 42로 val 50장과 test 50장으로 나눕니다.
+`prepare_data.py`는 최종 10개 클래스 원본만 받아 `raw/train`은 그대로 복사하고 `raw/validation`은 seed 42로 val/test에 절반씩 나눕니다. 현재 저장소의 `data/raw`는 이전 15클래스 데이터이므로 최종 10클래스 원본으로 교체하기 전에는 아래 명령을 실행하지 마세요. 특히 현재 processed 데이터를 보존하려면 `--overwrite`를 사용하지 않아야 합니다.
 
 ```bash
 python -m src.data.prepare_data

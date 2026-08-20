@@ -1,8 +1,9 @@
-"""AI-Hub 원본 이미지를 공통 train/val/test 데이터로 준비한다.
+"""10개 클래스 원본 이미지를 공통 train/val/test 데이터로 준비한다.
 
-raw/train은 모두 train으로 복사하고, raw/validation은 클래스마다 seed 42로
-50장씩 val과 test로 나눈다. 기존 processed 데이터는 --overwrite 없이는
-수정하지 않아 실수로 서로 다른 split이 섞이는 것을 막는다.
+raw/train은 모두 train으로 복사하고 raw/validation은 클래스마다 절반씩 val과
+test로 나눈다. 기존 processed 데이터는 --overwrite 없이는 수정하지 않는다.
+현재 저장소의 legacy raw 폴더는 15개 클래스이므로 최종 10개 클래스 원본으로
+교체하기 전에는 이 명령을 실행할 수 없다.
 """
 
 import argparse
@@ -10,30 +11,11 @@ import random
 import shutil
 from pathlib import Path
 
+from src.classes import CLASS_NAMES
+
 
 SEED = 42
-EXPECTED_TRAIN_PER_CLASS = 800
-EXPECTED_VALIDATION_PER_CLASS = 100
-VAL_PER_CLASS = 50
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff", ".webp"}
-
-CLASS_NAMES = [
-    "actinic_keratosis",
-    "basal_cell_carcinoma",
-    "bowen_disease",
-    "dermatofibroma",
-    "epidermal_cyst",
-    "hemangioma",
-    "lentigo",
-    "malignant_melanoma",
-    "melanocytic_nevus",
-    "milia",
-    "pyogenic_granuloma",
-    "sebaceous_hyperplasia",
-    "seborrheic_keratosis",
-    "squamous_cell_carcinoma",
-    "wart",
-]
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 RAW_TRAIN_DIR = PROJECT_ROOT / "data" / "raw" / "train"
@@ -65,8 +47,10 @@ def validate_raw_data() -> dict[str, tuple[list[Path], list[Path]]]:
     )
     if train_classes != CLASS_NAMES or validation_classes != CLASS_NAMES:
         raise ValueError(
-            "원본 데이터의 클래스 폴더가 프로젝트의 15개 클래스와 일치하지 않습니다.\n"
-            f"기대 클래스: {CLASS_NAMES}\n"
+            "원본 데이터의 클래스 폴더가 프로젝트의 최종 클래스와 일치하지 "
+            "않습니다. 현재 legacy 15클래스 raw 데이터로 processed 데이터를 "
+            "덮어쓰지 마세요.\n"
+            f"기대 클래스: {list(CLASS_NAMES)}\n"
             f"train 클래스: {train_classes}\n"
             f"validation 클래스: {validation_classes}"
         )
@@ -75,16 +59,12 @@ def validate_raw_data() -> dict[str, tuple[list[Path], list[Path]]]:
     for class_name in CLASS_NAMES:
         train_files = list_images(RAW_TRAIN_DIR / class_name)
         validation_files = list_images(RAW_VALIDATION_DIR / class_name)
-        if len(train_files) != EXPECTED_TRAIN_PER_CLASS:
+        if not train_files:
+            raise ValueError(f"{class_name}: train 이미지가 없습니다.")
+        if len(validation_files) < 2:
             raise ValueError(
-                f"{class_name}: train 이미지가 {EXPECTED_TRAIN_PER_CLASS}장이 아니라 "
-                f"{len(train_files)}장입니다."
-            )
-        if len(validation_files) != EXPECTED_VALIDATION_PER_CLASS:
-            raise ValueError(
-                f"{class_name}: validation 이미지가 "
-                f"{EXPECTED_VALIDATION_PER_CLASS}장이 아니라 "
-                f"{len(validation_files)}장입니다."
+                f"{class_name}: validation 이미지는 val/test 분할을 위해 "
+                "2장 이상이어야 합니다."
             )
         files_by_class[class_name] = (train_files, validation_files)
 
@@ -119,8 +99,9 @@ def prepare_data(overwrite: bool = False) -> None:
             train_files, validation_files = files_by_class[class_name]
             shuffled_validation = validation_files.copy()
             rng.shuffle(shuffled_validation)
-            val_files = shuffled_validation[:VAL_PER_CLASS]
-            test_files = shuffled_validation[VAL_PER_CLASS:]
+            val_count = len(shuffled_validation) // 2
+            val_files = shuffled_validation[:val_count]
+            test_files = shuffled_validation[val_count:]
 
             split_files = {
                 "train": train_files,
@@ -146,7 +127,15 @@ def prepare_data(overwrite: bool = False) -> None:
             shutil.rmtree(BUILD_DIR)
         raise
 
-    print("\n데이터 준비 완료: train=12000, val=750, test=750 (seed=42)")
+    split_counts = {
+        split: sum(1 for path in (PROCESSED_DIR / split).rglob("*") if path.is_file())
+        for split in ("train", "val", "test")
+    }
+    print(
+        "\n데이터 준비 완료: "
+        f"train={split_counts['train']}, val={split_counts['val']}, "
+        f"test={split_counts['test']} (seed={SEED})"
+    )
 
 
 def parse_args() -> argparse.Namespace:

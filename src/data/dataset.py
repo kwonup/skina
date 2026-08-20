@@ -6,6 +6,8 @@ import torch
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 
+from src.classes import validate_class_names
+
 
 SEED = 42
 IMAGE_SIZE = 224
@@ -69,6 +71,10 @@ def create_dataloaders(
     ):
         raise ValueError("train/val/test의 클래스 폴더 구성이 서로 다릅니다.")
 
+    class_names = validate_class_names(
+        train_dataset.classes, source="processed dataset"
+    )
+
     # generator를 고정하면 train shuffle 순서도 같은 환경에서 재현할 수 있다.
     generator = torch.Generator().manual_seed(seed)
     common_options = {
@@ -82,7 +88,7 @@ def create_dataloaders(
     val_loader = DataLoader(val_dataset, shuffle=False, **common_options)
     test_loader = DataLoader(test_dataset, shuffle=False, **common_options)
 
-    return train_loader, val_loader, test_loader, train_dataset.classes
+    return train_loader, val_loader, test_loader, list(class_names)
 
 
 if __name__ == "__main__":
