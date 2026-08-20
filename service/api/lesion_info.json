@@ -1,0 +1,82 @@
+{
+  "actinic_keratosis": {
+    "name_ko": "",
+    "name_en": "",
+    "category": "",
+    "description": "",
+    "features": [],
+    "precautions": []
+  },
+  "basal_cell_carcinoma": {
+    "name_ko": "",
+    "name_en": "",
+    "category": "",
+    "description": "",
+    "features": [],
+    "precautions": []
+  },
+  "dermatofibroma": {
+    "name_ko": "",
+    "name_en": "",
+    "category": "",
+    "description": "",
+    "features": [],
+    "precautions": []
+  },
+  "hemangioma": {
+    "name_ko": "",
+    "name_en": "",
+    "category": "",
+    "description": "",
+    "features": [],
+    "precautions": []
+  },
+  "lentigo": {
+    "name_ko": "",
+    "name_en": "",
+    "category": "",
+    "description": "",
+    "features": [],
+    "precautions": []
+  },
+  "malignant_melanoma": {
+    "name_ko": "",
+    "name_en": "",
+    "category": "",
+    "description": "",
+    "features": [],
+    "precautions": []
+  },
+  "melanocytic_nevus": {
+    "name_ko": "",
+    "name_en": "",
+    "category": "",
+    "description": "",
+    "features": [],
+    "precautions": []
+  },
+  "seborrheic_keratosis": {
+    "name_ko": "",
+    "name_en": "",
+    "category": "",
+    "description": "",
+    "features": [],
+    "precautions": []
+  },
+  "squamous_cell_carcinoma": {
+    "name_ko": "",
+    "name_en": "",
+    "category": "",
+    "description": "",
+    "features": [],
+    "precautions": []
+  },
+  "wart": {
+    "name_ko": "",
+    "name_en": "",
+    "category": "",
+    "description": "",
+    "features": [],
+    "precautions": []
+  }
+}

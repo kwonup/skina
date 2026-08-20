@@ -12,8 +12,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image, UnidentifiedImageError
 from starlette.concurrency import run_in_threadpool
 
+from service.api.lesions import MEDICAL_DISCLAIMER, load_lesion_catalog
 from service.api.schemas import (
     HealthResponse,
+    LesionInformation,
+    LesionsResponse,
     PredictResponse,
     PredictionSummary,
     TopPrediction,
@@ -78,6 +81,9 @@ def create_app(
         application.state.inference_model = model_loader(
             service_settings.model_path
         )
+        application.state.lesion_catalog = load_lesion_catalog(
+            application.state.inference_model.class_names
+        )
         yield
 
     application = FastAPI(
@@ -130,17 +136,36 @@ def create_app(
             TopPrediction(
                 rank=item.rank,
                 class_name=item.class_name,
+                name_ko=request.app.state.lesion_catalog[
+                    item.class_name
+                ].name_ko,
                 probability=item.probability,
             )
             for item in output.predictions
         ]
+        information: LesionInformation = request.app.state.lesion_catalog[
+            top3[0].class_name
+        ]
         return PredictResponse(
             prediction=PredictionSummary(
                 class_name=top3[0].class_name,
+                name_ko=information.name_ko,
+                name_en=information.name_en,
                 confidence=top3[0].probability,
             ),
             top3=top3,
             inference_time_ms=output.inference_time_ms,
+            information=information,
+            disclaimer=MEDICAL_DISCLAIMER,
+        )
+
+    @application.get("/lesions", response_model=LesionsResponse)
+    async def lesions(request: Request) -> LesionsResponse:
+        inference_model: InferenceModel = request.app.state.inference_model
+        catalog: dict[str, LesionInformation] = request.app.state.lesion_catalog
+        return LesionsResponse(
+            lesions=[catalog[class_name] for class_name in inference_model.class_names],
+            disclaimer=MEDICAL_DISCLAIMER,
         )
 
     return application
