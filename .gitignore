@@ -17,3 +17,6 @@ __pycache__/
 venv/
 .env
 .DS_Store
+
+#+0820: pred_pool 폴더 제외
+predict_pool/
