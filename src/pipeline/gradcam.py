@@ -12,8 +12,8 @@ from PIL import Image
 
 from src.config import get_checkpoint_path, load_config
 from src.data.dataset import IMAGE_SIZE, create_eval_transform
+from src.device import get_device
 from src.models import MODEL_NAMES, create_model
-from src.pipeline.train import get_device
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
