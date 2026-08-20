@@ -8,3 +8,7 @@ matplotlib
 Pillow
 tqdm
 jupyter
+fastapi
+uvicorn[standard]
+python-multipart
+httpx
