@@ -2,38 +2,39 @@
 
 # skina
 
-AI-Hub 피부종양 합성 이미지 데이터로 15종 피부종양을 분류하는 PyTorch 팀 프로젝트입니다. 네 모델을 같은 데이터 split과 baseline 조건으로 학습하고 Accuracy와 Macro F1을 비교합니다.
+AI-Hub 합성 이미지와 실제 피부 병변 이미지로 10종 피부 병변을 분류하는 PyTorch 팀 프로젝트입니다. 네 모델을 같은 데이터 split과 baseline 조건으로 학습하고 Accuracy와 Macro F1을 비교합니다.
 
 ## Dataset
 
-- AI-Hub Dataset 71864 피부종양 이미지 합성 데이터
-- RGB 512×512 이미지 총 13,500장, 클래스당 900장
+- Synthetic train: AI-Hub 클래스별 원본 800장 중 seed 42로 500장 선택
+- Real: 클래스별 train 500장, validation 100장, test 100장
 - 모델 입력 크기: 224×224
-- 최종 split: train 12,000장 / validation 750장 / test 750장
+- 최종 split: train 10,000장 / validation 1,000장 / test 1,000장
+- Train은 클래스마다 Synthetic 500장 + Real 500장으로 구성
 
-원본 이미지는 아래처럼 폴더명을 정답 라벨로 사용하도록 배치합니다. JSON 라벨은 보관만 하며 `ImageFolder` 학습에는 사용하지 않습니다.
+Synthetic 원본과 Real 원본은 수정하지 않습니다. 준비 스크립트는 두 원본에서 파일을 복사하고 이름을 바꿔 새 `processed` 데이터셋을 만듭니다.
 
 ```text
 data/raw/
-├── train/<class_name>/*.jpg
-├── validation/<class_name>/*.jpg
-└── labels/
+├── train/<class_name>/*          # Synthetic 원본, 클래스당 800장
+├── validation/<class_name>/*     # 기존 Synthetic validation/test용 원본(이번 split에는 미사용)
+└── labels/                       # 보관만 함
+
+<real_root>/
+└── <한글 클래스 폴더>/*.png      # 새 Real 원본
 ```
 
-## 15 Classes
+## 10 Classes
 
 ```text
-actinic_keratosis          basal_cell_carcinoma
-bowen_disease              dermatofibroma
-epidermal_cyst             hemangioma
-lentigo                    malignant_melanoma
-melanocytic_nevus          milia
-pyogenic_granuloma         sebaceous_hyperplasia
-seborrheic_keratosis       squamous_cell_carcinoma
-wart
+actinic_keratosis             basal_cell_carcinoma
+dermatofibroma                hemangioma
+lentigo                       malignant_melanoma
+melanocytic_nevus             squamous_cell_carcinoma
+seborrheic_keratosis          wart
 ```
 
-`ImageFolder`가 클래스 폴더명을 알파벳순 index로 바꾸며, 이 순서는 checkpoint의 `class_names`에도 저장됩니다.
+클래스 index는 `data/processed/class_names.json`의 순서로 고정되며 checkpoint의 `class_names`에도 저장됩니다.
 
 ## Project Structure
 
@@ -46,8 +47,14 @@ skina/
 │   └── mobilenet_v3.json
 ├── data/
 │   ├── raw/{train,validation,labels}/
-│   └── processed/{train,val,test}/
+│   └── processed/
+│       ├── {train,validation,test}/
+│       ├── predict_pool/{real,synthetic}/
+│       ├── class_names.json
+│       ├── dataset_manifest.csv
+│       └── split_summary.csv
 ├── notebooks/01_eda.ipynb
+├── scripts/prepare_dataset.py
 ├── src/
 │   ├── config.py
 │   ├── data/
@@ -135,17 +142,19 @@ wandb login
 
 ## Prepare Data
 
-`data/raw/train`의 12,000장은 그대로 train으로 복사하고, `data/raw/validation`의 클래스별 100장은 seed 42로 val 50장과 test 50장으로 나눕니다.
+seed 42로 Synthetic train 500장과 Real train/validation/test를 분할합니다. Real 원본이 부족한 `actinic_keratosis`와 `malignant_melanoma`는 train 원본에만 보수적인 증강을 적용해 Real train을 500장으로 맞춥니다. 사용하지 않은 Synthetic train 및 Real 원본은 학습/공식 평가에서 제외되는 `predict_pool`로 복사합니다.
 
 ```bash
-python -m src.data.prepare_data
+python scripts/prepare_dataset.py --real-root "C:\path\to\10개클래스_합산"
 ```
 
-기존 `data/processed`에 실제 데이터가 있으면 안전을 위해 중단합니다. 의도적으로 동일 규칙으로 다시 만들 때만 다음 옵션을 사용합니다.
+현재 PC에서는 `--real-root`를 생략하면 이 작업에 사용한 다운로드 폴더를 기본값으로 사용합니다. 다른 환경에서는 반드시 실제 경로를 지정하세요. 기존 `data/processed`가 있으면 안전을 위해 중단하며, 검증된 새 빌드로 의도적으로 교체할 때만 `--overwrite`를 사용합니다.
 
 ```bash
-python -m src.data.prepare_data --overwrite
+python scripts/prepare_dataset.py --real-root "C:\path\to\10개클래스_합산" --overwrite
 ```
+
+스크립트는 `dataset_manifest.csv`, `split_summary.csv`, `class_names.json`을 만들고 SHA-256 기준 공식 split 중복, 증강 parent 누수, Predict Pool 격리를 검사합니다. 기존 호환 명령 `python -m src.data.prepare_data`도 같은 스크립트를 실행합니다.
 
 DataLoader 확인은 선택 사항입니다. 학습할 때는 자동으로 생성됩니다.
 
@@ -225,3 +234,19 @@ python -m src.pipeline.gradcam --config configs/resnet18.json --image sample/exa
 | D    | `src/models/mobilenet_v3.py`    | `configs/mobilenet_v3.json`    |
 
 팀 공통 실험 규칙은 [`docs/experiment_rules.md`](docs/experiment_rules.md)를 따릅니다.
+
+
+### 공통 환경 설치
+
+python -m venv .venv
+.venv\Scripts\activate
+python -m pip install -r requirements.txt
+
+### NVIDIA GPU 사용
+
+python -m pip install torch torchvision \
+  --index-url https://download.pytorch.org/whl/cu118
+
+### CPU 또는 macOS 사용
+
+python -m pip install torch torchvision

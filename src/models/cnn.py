@@ -6,7 +6,7 @@ import torch.nn as nn
 class CustomCNN(nn.Module):
     """AdaptiveAvgPool을 사용해 FC 입력 크기 계산을 단순화한 기본 CNN."""
 
-    def __init__(self, num_classes: int = 15):
+    def __init__(self, num_classes: int = 10):
         super().__init__()
         self.features = nn.Sequential(
             self._conv_block(3, 32),
@@ -37,7 +37,7 @@ class CustomCNN(nn.Module):
         return self.classifier(pooled)
 
 
-def create_cnn(num_classes: int = 15, pretrained: bool = True) -> nn.Module:
+def create_cnn(num_classes: int = 10, pretrained: bool = True) -> nn.Module:
     """Custom CNN을 만든다. pretrained 인자는 공통 interface를 위해 받기만 한다."""
     del pretrained
     return CustomCNN(num_classes=num_classes)

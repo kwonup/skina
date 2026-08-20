@@ -7,7 +7,7 @@
     "seed": 42
   },
   "training": {
-    "epochs": 15,
+    "epochs": 4,
     "learning_rate": 0.0001,
     "optimizer": "Adam",
     "weight_decay": 0.0,

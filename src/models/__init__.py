@@ -12,7 +12,7 @@ MODEL_NAMES = ("cnn", "resnet18", "efficientnet_b0", "mobilenet_v3")
 
 
 def create_model(
-    model_name: str, num_classes: int = 15, pretrained: bool = True
+    model_name: str, num_classes: int = 10, pretrained: bool = True
 ) -> nn.Module:
     """이름에 맞는 팀원별 모델 생성 함수를 호출한다."""
     model_name = model_name.lower()
