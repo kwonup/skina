@@ -85,12 +85,20 @@ skina/
 
 Python 3.9 이상 환경을 권장합니다.
 
-```bash
-cd skina
+### 공통 환경 설치
+
 python -m venv .venv
-source .venv/bin/activate       # Windows: .venv\Scripts\activate
+.venv\Scripts\activate
 python -m pip install -r requirements.txt
-```
+
+### NVIDIA GPU 사용
+
+python -m pip install torch torchvision \
+  --index-url https://download.pytorch.org/whl/cu118
+
+### CPU 또는 macOS 사용
+
+python -m pip install torch torchvision
 
 W&B를 사용할 팀원은 최초 한 번 로그인합니다.
 
