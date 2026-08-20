@@ -6,18 +6,24 @@
     "num_workers": 4,
     "seed": 42
   },
-  "training": {
-    "epochs": 4,
+ "training": {
+    "epochs": 8,
     "learning_rate": 0.0001,
-    "optimizer": "Adam",
-    "weight_decay": 0.0,
-    "pretrained": true
+    "optimizer": "AdamW",
+    "weight_decay": 0.0001,
+    "pretrained": true,
+    "early_stopping": {
+      "enabled": true,
+      "patience": 2,
+      "monitor": "val_f1",
+      "mode": "max"
+    }
   },
   "wandb": {
     "enabled": true,
     "entity": "sesac08",
     "project": "skina",
-    "run_name": "mobilenet_v3_baseline"
+    "run_name": "mobilenet_v3_baseline_v2"
   },
   "inference": {
     "top_k": 3,

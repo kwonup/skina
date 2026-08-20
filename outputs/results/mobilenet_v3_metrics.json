@@ -1,116 +1,86 @@
 {
   "model": "mobilenet_v3",
   "checkpoint": "C:\\Users\\user\\Desktop\\Git\\skina\\outputs\\models\\mobilenet_v3_best.pth",
-  "checkpoint_epoch": 2,
-  "validation_accuracy": 0.9973333333333333,
-  "validation_f1_macro": 0.9973330666399974,
-  "test_accuracy": 0.996,
-  "test_f1_macro": 0.9959858570891105,
-  "test_precision_macro": 0.996078431372549,
-  "test_recall_macro": 0.996,
+  "checkpoint_epoch": 8,
+  "validation_accuracy": 0.773,
+  "validation_f1_macro": 0.7723316169338574,
+  "test_accuracy": 0.777,
+  "test_f1_macro": 0.7763469878738369,
+  "test_precision_macro": 0.7779930280485624,
+  "test_recall_macro": 0.7769999999999999,
   "classification_report": {
     "actinic_keratosis": {
-      "precision": 1.0,
-      "recall": 0.98,
-      "f1-score": 0.98989898989899,
-      "support": 50.0
+      "precision": 0.7383177570093458,
+      "recall": 0.79,
+      "f1-score": 0.7632850241545893,
+      "support": 100.0
     },
     "basal_cell_carcinoma": {
-      "precision": 1.0,
-      "recall": 1.0,
-      "f1-score": 1.0,
-      "support": 50.0
-    },
-    "bowen_disease": {
-      "precision": 1.0,
-      "recall": 1.0,
-      "f1-score": 1.0,
-      "support": 50.0
+      "precision": 0.7378640776699029,
+      "recall": 0.76,
+      "f1-score": 0.7487684729064039,
+      "support": 100.0
     },
     "dermatofibroma": {
-      "precision": 1.0,
-      "recall": 1.0,
-      "f1-score": 1.0,
-      "support": 50.0
-    },
-    "epidermal_cyst": {
-      "precision": 1.0,
-      "recall": 0.96,
-      "f1-score": 0.9795918367346939,
-      "support": 50.0
+      "precision": 0.8673469387755102,
+      "recall": 0.85,
+      "f1-score": 0.8585858585858586,
+      "support": 100.0
     },
     "hemangioma": {
-      "precision": 1.0,
-      "recall": 1.0,
-      "f1-score": 1.0,
-      "support": 50.0
+      "precision": 0.83,
+      "recall": 0.83,
+      "f1-score": 0.83,
+      "support": 100.0
     },
     "lentigo": {
-      "precision": 1.0,
-      "recall": 1.0,
-      "f1-score": 1.0,
-      "support": 50.0
+      "precision": 0.9134615384615384,
+      "recall": 0.95,
+      "f1-score": 0.9313725490196079,
+      "support": 100.0
     },
     "malignant_melanoma": {
-      "precision": 1.0,
-      "recall": 1.0,
-      "f1-score": 1.0,
-      "support": 50.0
+      "precision": 0.780952380952381,
+      "recall": 0.82,
+      "f1-score": 0.8,
+      "support": 100.0
     },
     "melanocytic_nevus": {
-      "precision": 1.0,
-      "recall": 1.0,
-      "f1-score": 1.0,
-      "support": 50.0
-    },
-    "milia": {
-      "precision": 0.9803921568627451,
-      "recall": 1.0,
-      "f1-score": 0.9900990099009901,
-      "support": 50.0
-    },
-    "pyogenic_granuloma": {
-      "precision": 1.0,
-      "recall": 1.0,
-      "f1-score": 1.0,
-      "support": 50.0
-    },
-    "sebaceous_hyperplasia": {
-      "precision": 0.9803921568627451,
-      "recall": 1.0,
-      "f1-score": 0.9900990099009901,
-      "support": 50.0
+      "precision": 0.6330275229357798,
+      "recall": 0.69,
+      "f1-score": 0.6602870813397129,
+      "support": 100.0
     },
     "seborrheic_keratosis": {
-      "precision": 1.0,
-      "recall": 1.0,
-      "f1-score": 1.0,
-      "support": 50.0
+      "precision": 0.6555555555555556,
+      "recall": 0.59,
+      "f1-score": 0.6210526315789474,
+      "support": 100.0
     },
     "squamous_cell_carcinoma": {
-      "precision": 1.0,
-      "recall": 1.0,
-      "f1-score": 1.0,
-      "support": 50.0
+      "precision": 0.8313253012048193,
+      "recall": 0.69,
+      "f1-score": 0.7540983606557377,
+      "support": 100.0
     },
     "wart": {
-      "precision": 0.9803921568627451,
-      "recall": 1.0,
-      "f1-score": 0.9900990099009901,
-      "support": 50.0
+      "precision": 0.7920792079207921,
+      "recall": 0.8,
+      "f1-score": 0.7960199004975125,
+      "support": 100.0
     },
-    "accuracy": 0.996,
+    "accuracy": 0.777,
     "macro avg": {
-      "precision": 0.996078431372549,
-      "recall": 0.996,
-      "f1-score": 0.9959858570891105,
-      "support": 750.0
+      "precision": 0.7779930280485624,
+      "recall": 0.7769999999999999,
+      "f1-score": 0.7763469878738369,
+      "support": 1000.0
     },
     "weighted avg": {
-      "precision": 0.9960784313725489,
-      "recall": 0.996,
-      "f1-score": 0.9959858570891101,
-      "support": 750.0
+      "precision": 0.7779930280485625,
+      "recall": 0.777,
+      "f1-score": 0.776346987873837,
+      "support": 1000.0
     }
   }
 }
