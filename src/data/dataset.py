@@ -5,8 +5,7 @@ from pathlib import Path
 import torch
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
-import numpy as np
-from PIL import Image
+
 
 SEED = 42
 IMAGE_SIZE = 224
@@ -16,38 +15,14 @@ IMAGENET_STD = [0.229, 0.224, 0.225]
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
 
-class ShadesOfGrayColorConstancy:
-    """카메라/조명에 따른 색 편향을 채널별 평균이 같아지도록 보정한다."""
-    def __init__(self, power: float = 6.0, max_scale: float = 1.3, min_scale: float = 0.7):
-        self.power = power
-        self.max_scale = max_scale
-        self.min_scale = min_scale
-
-    def __call__(self, image: Image.Image) -> Image.Image:
-        array = np.asarray(image).astype(np.float32)
-        pixels = array.reshape(-1, array.shape[-1])
-        channel_norms = (pixels ** self.power).mean(axis=0) ** (1.0 / self.power)
-        gray_norm = channel_norms.mean()
-        scale = np.clip(gray_norm / (channel_norms + 1e-6), self.min_scale, self.max_scale)
-        corrected = np.clip(array * scale, 0, 255).astype(np.uint8)
-        return Image.fromarray(corrected)
-
 def create_train_transform(image_size: int = IMAGE_SIZE):
     """config의 image_size를 반영한 학습용 랜덤 증강을 만든다."""
     return transforms.Compose(
         [
-            ShadesOfGrayColorConstancy(),                      # ← 추가: 크롭 전, 원본 전체 기준으로 보정
             transforms.RandomResizedCrop(image_size),
             transforms.RandomHorizontalFlip(),
-            transforms.ColorJitter(                          # ← 추가
-                brightness=0.2, contrast=0.2, saturation=0.2, hue=0.05
-            ),
-            transforms.RandomApply(                          # ← 추가
-                [transforms.GaussianBlur(kernel_size=3, sigma=(0.1, 1.5))], p=0.3
-            ),
             transforms.ToTensor(),
             transforms.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
-            transforms.RandomErasing(p=0.2),                 # ← 추가: ToTensor 뒤에 와야 함(텐서 대상)
         ]
     )
 
@@ -56,7 +31,6 @@ def create_eval_transform(image_size: int = IMAGE_SIZE):
     """config의 image_size를 반영한 validation/test/추론 transform을 만든다."""
     return transforms.Compose(
         [
-            ShadesOfGrayColorConstancy(),                      # ← 추가: train과 동일 보정
             transforms.Resize((image_size, image_size)),
             transforms.ToTensor(),
             transforms.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
