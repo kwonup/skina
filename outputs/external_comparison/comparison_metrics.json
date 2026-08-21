@@ -1,0 +1,198 @@
+{
+  "dataset": {
+    "path": "C:\\Users\\user\\Downloads\\최종샘플데이터셋",
+    "total_images": 138,
+    "class_distribution": {
+      "actinic_keratosis": 1,
+      "basal_cell_carcinoma": 1,
+      "dermatofibroma": 1,
+      "hemangioma": 3,
+      "lentigo": 22,
+      "malignant_melanoma": 21,
+      "melanocytic_nevus": 21,
+      "seborrheic_keratosis": 22,
+      "squamous_cell_carcinoma": 20,
+      "wart": 26
+    },
+    "target_classes": [
+      "actinic_keratosis",
+      "basal_cell_carcinoma",
+      "dermatofibroma",
+      "hemangioma",
+      "lentigo",
+      "malignant_melanoma",
+      "melanocytic_nevus",
+      "seborrheic_keratosis",
+      "squamous_cell_carcinoma",
+      "wart"
+    ],
+    "image_size": 224
+  },
+  "models": {
+    "previous": {
+      "checkpoint": {
+        "path": "C:\\Users\\user\\Desktop\\sesac08code\\DeepLearningProject\\skina\\outputs\\models\\efficientnet_b0_best_beforeaug.pth",
+        "model_name": "efficientnet_b0",
+        "class_names": [
+          "actinic_keratosis",
+          "basal_cell_carcinoma",
+          "bowen_disease",
+          "dermatofibroma",
+          "epidermal_cyst",
+          "hemangioma",
+          "lentigo",
+          "malignant_melanoma",
+          "melanocytic_nevus",
+          "milia",
+          "pyogenic_granuloma",
+          "sebaceous_hyperplasia",
+          "seborrheic_keratosis",
+          "squamous_cell_carcinoma",
+          "wart"
+        ],
+        "image_size": 224,
+        "epoch": 3,
+        "validation_accuracy": 0.9986666666666667,
+        "validation_f1_macro": 0.9986665333199987
+      },
+      "metrics": {
+        "accuracy": 0.21739130434782608,
+        "macro_f1": 0.13773073989321127,
+        "macro_recall": 0.16938061938061938,
+        "correct_count": 30,
+        "total_count": 138,
+        "class_recall": {
+          "actinic_keratosis": {
+            "recall": 0.0,
+            "support": 1
+          },
+          "basal_cell_carcinoma": {
+            "recall": 0.0,
+            "support": 1
+          },
+          "dermatofibroma": {
+            "recall": 0.0,
+            "support": 1
+          },
+          "hemangioma": {
+            "recall": 0.3333333333333333,
+            "support": 3
+          },
+          "lentigo": {
+            "recall": 0.045454545454545456,
+            "support": 22
+          },
+          "malignant_melanoma": {
+            "recall": 0.9047619047619048,
+            "support": 21
+          },
+          "melanocytic_nevus": {
+            "recall": 0.3333333333333333,
+            "support": 21
+          },
+          "seborrheic_keratosis": {
+            "recall": 0.0,
+            "support": 22
+          },
+          "squamous_cell_carcinoma": {
+            "recall": 0.0,
+            "support": 20
+          },
+          "wart": {
+            "recall": 0.07692307692307693,
+            "support": 26
+          }
+        },
+        "predictions_outside_target_classes": {
+          "epidermal_cyst": 7,
+          "sebaceous_hyperplasia": 1
+        }
+      }
+    },
+    "recent": {
+      "checkpoint": {
+        "path": "C:\\Users\\user\\Desktop\\sesac08code\\DeepLearningProject\\skina\\outputs\\models\\efficientnet_b0_best_new.pth",
+        "model_name": "efficientnet_b0",
+        "class_names": [
+          "actinic_keratosis",
+          "basal_cell_carcinoma",
+          "dermatofibroma",
+          "hemangioma",
+          "lentigo",
+          "malignant_melanoma",
+          "melanocytic_nevus",
+          "seborrheic_keratosis",
+          "squamous_cell_carcinoma",
+          "wart"
+        ],
+        "image_size": 224,
+        "epoch": 7,
+        "validation_accuracy": 0.771,
+        "validation_f1_macro": 0.7702901837869429
+      },
+      "metrics": {
+        "accuracy": 0.6086956521739131,
+        "macro_f1": 0.5952372123790587,
+        "macro_recall": 0.7262787212787213,
+        "correct_count": 84,
+        "total_count": 138,
+        "class_recall": {
+          "actinic_keratosis": {
+            "recall": 1.0,
+            "support": 1
+          },
+          "basal_cell_carcinoma": {
+            "recall": 1.0,
+            "support": 1
+          },
+          "dermatofibroma": {
+            "recall": 1.0,
+            "support": 1
+          },
+          "hemangioma": {
+            "recall": 0.6666666666666666,
+            "support": 3
+          },
+          "lentigo": {
+            "recall": 0.22727272727272727,
+            "support": 22
+          },
+          "malignant_melanoma": {
+            "recall": 0.6190476190476191,
+            "support": 21
+          },
+          "melanocytic_nevus": {
+            "recall": 0.8571428571428571,
+            "support": 21
+          },
+          "seborrheic_keratosis": {
+            "recall": 0.7272727272727273,
+            "support": 22
+          },
+          "squamous_cell_carcinoma": {
+            "recall": 0.55,
+            "support": 20
+          },
+          "wart": {
+            "recall": 0.6153846153846154,
+            "support": 26
+          }
+        },
+        "predictions_outside_target_classes": {}
+      }
+    }
+  },
+  "improvement": {
+    "accuracy_percentage_points": 39.1304347826087,
+    "macro_f1": 0.4575064724858474,
+    "macro_recall": 0.5568981018981018,
+    "correct_count": 54
+  },
+  "transitions": {
+    "previous_wrong_to_recent_correct": 61,
+    "previous_correct_to_recent_wrong": 7,
+    "both_correct": 23,
+    "both_wrong": 47
+  },
+  "representative_improved_examples": 8
+}

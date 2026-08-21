@@ -1,7 +1,6 @@
-<img src="skina_logo.png"/>
+<img src="service\web\public\skina_logo.png"/>
 
 # skina
-
 재구성된 피부 이미지 데이터로 10종 피부 병변을 분류하는 PyTorch 팀 프로젝트입니다. 네 모델을 같은 데이터 split과 baseline 조건으로 학습하고 Accuracy와 Macro F1을 비교합니다.
 
 ## Dataset

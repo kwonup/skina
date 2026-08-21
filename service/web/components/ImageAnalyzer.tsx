@@ -5,6 +5,7 @@ import { ChangeEvent, DragEvent, useEffect, useRef, useState } from "react";
 
 import { predictImage } from "@/lib/api";
 import type { PredictResponse } from "@/lib/types";
+import ResultPanel from "@/components/ResultPanel";
 
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
@@ -168,11 +169,7 @@ export default function ImageAnalyzer() {
       </div>
 
       {error && <div className="error-message" role="alert">{error}</div>}
-      {result && (
-        <div className="analysis-complete" role="status">
-          분석이 완료되었습니다. 아래에서 결과를 확인하세요.
-        </div>
-      )}
+      {result && <ResultPanel result={result} />}
     </div>
   );
 }
