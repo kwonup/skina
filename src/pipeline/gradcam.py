@@ -4,11 +4,15 @@ import argparse
 from pathlib import Path
 from typing import Optional
 
-import matplotlib.pyplot as plt
+import matplotlib
 import numpy as np
 import torch
 import torch.nn.functional as functional
 from PIL import Image
+
+# 서버/CI 환경에서도 Grad-CAM PNG를 저장할 수 있게 비대화식 백엔드를 사용한다.
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 
 from src.config import get_checkpoint_path, load_config
 from src.data.dataset import IMAGE_SIZE, create_eval_transform
@@ -157,7 +161,9 @@ def main() -> None:
     model = model.to(device)
     model.eval()
 
-    image = Image.open(args.image).convert("RGB").resize((image_size, image_size))
+    # 평가/서비스 추론과 완전히 같은 transform을 원본 PIL 이미지에 한 번만 적용한다.
+    # 사전 resize를 하면 PIL 기본 보간법이 달라져 예측과 Grad-CAM 대상이 달라질 수 있다.
+    image = Image.open(args.image).convert("RGB")
     input_tensor = create_eval_transform(image_size)(image).unsqueeze(0).to(device)
     with torch.no_grad():
         probabilities = torch.softmax(model(input_tensor), dim=1)
@@ -176,7 +182,10 @@ def main() -> None:
         model, target_layer, input_tensor, target_index, output_size=image_size
     )
 
-    rgb_image = np.asarray(image, dtype=np.float32) / 255.0
+    display_image = image.resize(
+        (image_size, image_size), resample=Image.Resampling.BILINEAR
+    )
+    rgb_image = np.asarray(display_image, dtype=np.float32) / 255.0
     heatmap = plt.get_cmap("jet")(cam)[..., :3]
     overlay = np.clip(0.55 * rgb_image + 0.45 * heatmap, 0, 1)
 
